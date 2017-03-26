@@ -1,7 +1,9 @@
 /coverage/
+/dist/
 .DS_Store
 
 lib-cov
+/lib/
 *.seed
 *.log
 *.csv

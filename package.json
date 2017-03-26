@@ -1,26 +1,34 @@
 {
   "name": "hello-es6",
   "version": "1.0.0",
-  "description": "Following the js-stack-from-scratch tutorial v2",
-  "main": "index.js",
-  "author": "nspool",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node src",
-    "test": "eslint src && flow && jest --coverage",
+    "start": "yarn dev:start",
+    "dev:start": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
+    "dev:wds": "webpack-dev-server --progress",
+    "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js && cross-env NODE_ENV=production webpack -p --progress",
+    "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "prod:stop": "pm2 delete server",
+    "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
+    "test": "yarn lint && flow && jest --coverage",
     "precommit": "yarn test",
-    "prepush": "yarn test"
+    "prepush": "yarn test && yarn prod:build"
   },
   "dependencies": {
-    "color": "^1.0.3"
+    "babel-polyfill": "^6.23.0",
+    "compression": "^1.6.2",
+    "express": "^4.15.0"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
+    "babel-core": "^6.24.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^19.0.0",
+    "babel-loader": "^6.4.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-latest": "^6.22.0",
-    "eslint": "^3.17.0",
+    "cross-env": "^3.1.4",
+    "eslint": "^3.16.1",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-import": "^2.2.0",
@@ -28,6 +36,11 @@
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.40.0",
     "husky": "^0.13.2",
-    "jest": "^19.0.2"
+    "jest": "^19.0.2",
+    "nodemon": "^1.11.0",
+    "pm2": "^2.4.2",
+    "rimraf": "^2.6.1",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
   }
 }
