@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "babel-plugin-flow-react-proptypes": "^0.21.0",
+    "babel-preset-react": "^6.23.0"
+  }
+}
